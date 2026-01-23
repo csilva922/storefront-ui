@@ -54,7 +54,7 @@ export default defineNuxtConfig({
       'GetAddressesQuery',
     ],
     public: {
-      apiBase: process.env.PAYLOAD_PUBLIC_BASE_URL || 'http://localhost:3000',
+      apiBase: process.env.PAYLOAD_PUBLIC_BASE_URL,
       odooBaseImageUrl: process.env.NUXT_PUBLIC_ODOO_BASE_IMAGE_URL,
       odooBaseUrl: process.env.NUXT_PUBLIC_ODOO_BASE_URL,
       middlewareUrl: process.env.NUXT_PUBLIC_MIDDLEWARE_URL,
@@ -63,7 +63,7 @@ export default defineNuxtConfig({
       currencyDecimal: process.env.NUXT_PUBLIC_CURRENCY_DECIMAL,
       currencyPrecision: process.env.NUXT_PUBLIC_CURRENCY_PRECISION,
       siteURL: process.env.NUXT_PUBLIC_MIDDLEWARE_URL,
-      payloadURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3001', 
+      payloadURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
     },
   },
 
@@ -217,6 +217,9 @@ export default defineNuxtConfig({
   },
 
   payloadLexicalNuxtSerializer: {
-    componentsMap: {},
+    componentsMap: {
+      banner: '~/layers/core/components/MainBanner.vue',
+      categories: '~/layers/core/components/Categories.vue',
+    },
   },
 })

@@ -5,16 +5,14 @@ export const Banners: CollectionConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    useAsTitle: 'internalName',
+  },
   versions: {
     drafts: true,
     autosave: true,
   },
-  admin: {
-    useAsTitle: 'internalName',
-    livePreview: {
-      url: ({ data }) => `http://localhost:3001/preview/collection/banners/${data.id}`,
-    },
-  },
+
   fields: [
     { name: 'internalName', type: 'text', required: true },
     { name: 'heading', type: 'text', required: true },

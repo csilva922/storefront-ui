@@ -7,6 +7,8 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Banners } from './collections/Banners'
+import { Categories } from './collections/Categories'
+import { Home } from './globals/[global]'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +28,10 @@ export default buildConfig({
     Users,
     Media,
     Banners,
+    Categories,
   ],
+
+  globals: [Home],
 
   admin: {
     user: Users.slug,
@@ -34,25 +39,36 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     livePreview: {
-      url: ({ data, collectionConfig }) => {
+      url: ({ data, collectionConfig, globalConfig }) => {
         const baseURL = process.env.PAYLOAD_PUBLIC_FRONTEND_URL || 'http://localhost:3001'
-        return `${baseURL}/preview/collection/${collectionConfig.slug}/${data.id}`
+
+        if (globalConfig) {
+          return `${baseURL}/preview/global/${globalConfig.slug}`
+        }
+
+        if (collectionConfig && data?.id) {
+          return `${baseURL}/preview/collection/${collectionConfig.slug}/${data.id}`
+        }
+
+        return baseURL
       },
-      collections: ['banners'],
+      collections: ['banners', 'category'],
+      globals: ['home'],
     },
+
   },
 
   editor: lexicalEditor(),
-  
+
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  
+
   sharp,
   plugins: [],
 
   localization: {
-    locales: ['en', 'pt'],
+    locales: ['en'],
     defaultLocale: 'en',
   },
 })
