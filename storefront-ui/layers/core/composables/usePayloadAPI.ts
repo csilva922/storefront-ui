@@ -30,7 +30,7 @@ export const usePayloadAPI = () => {
   }
 
 
-  const fetchGlobal = async (slug: string, depth: number = 1, draft: boolean = false) => {
+  const fetchGlobal = async (slug: string, depth: number = 2, draft: boolean = true) => {
     try {
       const headers = {}
       const res = await $fetch(`${config.public.apiBase}/api/globals/${slug}`, {

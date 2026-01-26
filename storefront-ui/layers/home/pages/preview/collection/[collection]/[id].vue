@@ -8,8 +8,6 @@ const route = useRoute()
 const collection = String(route.params.collection || '')
 const id = String(route.params.id || '')
 const { public: { apiBase, payloadURL } } = config
-console.log('payloadURL', payloadURL)
-
 const { data: initial } = await useAsyncData(
   `preview:${collection}:${id}`,
   () => $fetch(`${apiBase}/api/${collection}/${id}`, { 
@@ -18,7 +16,6 @@ const { data: initial } = await useAsyncData(
   }),
   { default: () => null }
 )
-
 
 const { data } = useLivePreview({
   initialData: initial.value,

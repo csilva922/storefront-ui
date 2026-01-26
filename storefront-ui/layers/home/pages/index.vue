@@ -1,35 +1,15 @@
 <script setup lang="ts">
-import generateSeo, { type SeoEntity } from '~/utils/buildSEOHelper'
-import { useMegaMenuCategories } from '~/layers/core/composables/useMegaMenuCategories'
+import HomeLayoutRenderer from '~/layers/home/components/HomeLayoutRenderer.vue'
 import { usePayloadAPI } from '~/layers/core/composables/usePayloadAPI'
 
-const { getWebsiteHomepage, websiteHomepage } = useWebsiteHomePage()
-const { fetchBanners, fetchCategories } = usePayloadAPI()
-
-const { data: banners } = await useAsyncData(
-  'banners',
-  () => fetchBanners(),
-  { default: () => ({ docs: [] }) }
+const { fetchGlobal } = usePayloadAPI()
+const { data: home } = await useAsyncData(
+  'home-global',
+  () => fetchGlobal('home', 3),
+  { default: () => ({ layout: [] }) }
 )
-
-const { data: categories } = await useAsyncData(
-  'categories',
-  () => fetchCategories(),
-  { default: () => ({ docs: [] }) }
-)
-
-await getWebsiteHomepage()
-useHead(generateSeo<SeoEntity>(websiteHomepage.value, 'Home'))
-
-console.log("Banner data: ", banners)
 </script>
 
 <template>
-  <div>
-      <MainBanner :content="banners.docs[1]" />
-      <Categories :content="categories.docs[0]" />
-      <BannerRight :content="banners.docs[0]" />
-      <LazyProductRecentViewSlider heading="Shop our Best Sellers" />
-      <BannerLeft :content="banners.docs[0]" />
-  </div>
+   <HomeLayoutRenderer :layout="home.layout || []" />
 </template>

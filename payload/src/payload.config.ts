@@ -8,7 +8,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Banners } from './collections/Banners'
 import { Categories } from './collections/Categories'
-import { Home } from './globals/[global]'
+import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
