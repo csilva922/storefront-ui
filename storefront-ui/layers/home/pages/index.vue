@@ -5,7 +5,7 @@ import { usePayloadAPI } from '~/layers/core/composables/usePayloadAPI'
 const { fetchGlobal } = usePayloadAPI()
 const { data: home } = await useAsyncData(
   'home-global',
-  () => fetchGlobal('home', 3),
+  () => fetchGlobal('home', true, 3),
   { default: () => ({ layout: [] }) }
 )
 </script>

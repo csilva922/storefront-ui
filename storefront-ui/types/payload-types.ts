@@ -222,7 +222,7 @@ export interface Page {
             blockType: 'categories';
           }
         | {
-            heading?: string | null;
+            heading: string;
             content: {
               root: {
                 type: string;

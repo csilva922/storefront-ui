@@ -1,26 +1,29 @@
 <script setup lang="ts">
 import { useLivePreview } from '@payloadcms/live-preview-vue'
+import { usePayloadAPI } from '~/layers/core/composables/usePayloadAPI'
+
 import MainBanner from '~/layers/core/components/MainBanner.vue'
 import Categories from '~/layers/core/components/Categories.vue'
+import HomeLayoutRenderer from '~/layers/home/components/HomeLayoutRenderer.vue'
 
-const config = useRuntimeConfig()
 const route = useRoute()
+const config = useRuntimeConfig()
+
 const collection = String(route.params.collection || '')
 const id = String(route.params.id || '')
-const { public: { apiBase, payloadURL } } = config
+
+const { fetchByID } = usePayloadAPI()
+
 const { data: initial } = await useAsyncData(
   `preview:${collection}:${id}`,
-  () => $fetch(`${apiBase}/api/${collection}/${id}`, { 
-    query: { draft: 'true', depth: 2, }, 
-    credentials: 'include', 
-  }),
+  () => fetchByID(collection, id, true, 3),
   { default: () => null }
 )
 
 const { data } = useLivePreview({
   initialData: initial.value,
-  serverURL: payloadURL,
-  depth: 2,
+  serverURL: config.public.payloadURL || 'http://localhost:3000',
+  depth: 3,
 })
 </script>
 
@@ -28,9 +31,11 @@ const { data } = useLivePreview({
   <div class="p-6">
     <MainBanner v-if="collection === 'banners' && data" :content="data" />
     <Categories v-else-if="collection === 'category' && data" :content="data" />
+    <HomeLayoutRenderer v-else-if="collection === 'pages' && data?.layout" :layout="data.layout" />
 
     <pre v-else class="text-xs opacity-70">
-      No preview data. collection={{ collection }} id={{ id }}
+      No preview data.
+      collection={{ collection }} id={{ id }}
       {{ data }}
     </pre>
   </div>

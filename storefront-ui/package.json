@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "sync-types": "cp ../payload/src/payload-types.ts types/payload-types.ts"
   },
   "dependencies": {
     "@adyen/adyen-web": "^4.7.3",

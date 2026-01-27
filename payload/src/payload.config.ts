@@ -8,6 +8,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Banners } from './collections/Banners'
 import { Categories } from './collections/Categories'
+import { Pages } from './collections/Pages'
 import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
@@ -29,6 +30,7 @@ export default buildConfig({
     Media,
     Banners,
     Categories,
+    Pages,
   ],
 
   globals: [Home],
@@ -52,7 +54,7 @@ export default buildConfig({
 
         return baseURL
       },
-      collections: ['banners', 'category'],
+      collections: ['banners', 'category', 'pages'],
       globals: ['home'],
     },
 
